@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=build /app/out ./
 
 # Expose the port your app runs on
-EXPOSE 8080
+EXPOSE 5000
 
 # Set the entry point
 ENTRYPOINT ["dotnet", "BrokenAuthDemo.dll"]
