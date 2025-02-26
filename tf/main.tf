@@ -272,15 +272,16 @@ resource "aws_instance" "web" {
   user_data = <<-EOF
               #!/bin/bash
               sudo yum update -y
-              #sudo yum install -y httpd
-              #sudo systemctl start httpd
-              #sudo systemctl enable httpd
+              sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+              sudo wget -O /etc/yum.repos.d/microsoft-prod.repo https://packages.microsoft.com/config/fedora/37/prod.repo
+              sudo dnf install -y dotnet-sdk-8.0
               sudo yum install -y ruby wget
               cd /home/ec2-user
               wget https://aws-codedeploy-us-west-2.s3.us-west-2.amazonaws.com/latest/install
               chmod +x ./install
               sudo ./install auto
               sudo service codedeploy-agent start
+
               EOF
 
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
